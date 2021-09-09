@@ -1,7 +1,24 @@
 import numpy as np
-from datetime import datetime
 import matplotlib.pyplot as plt
 import progressbar
+import random
+from datetime import datetime
+import time
+
+
+def binary_search(arr, element):
+    pos_min = 0
+    pos_max = len(arr) - 1
+    while pos_min <= pos_max:
+        pos_mid = (pos_min + pos_max) // 2
+
+        if arr[pos_mid] > element:
+            pos_max = pos_mid - 1
+        elif arr[pos_mid] < element:
+            pos_min = pos_mid + 1
+        else:
+            return pos_mid
+    return -1
 
 
 def find_min(elements, from_index, to_index):
@@ -18,19 +35,20 @@ def selection_sort(elements):
         elements[i], elements[index] = elements[index], elements[i]
 
 
-cantidad = 2000
+cantidad = 200
 
-n = list(range(0, cantidad))
+n = list(range(1, cantidad))
 t = []
 
 bar_progres = 0
 bar_positive = progressbar.ProgressBar(max_value=cantidad)
 bar_positive.update(bar_progres)
 
-for size in range(cantidad):
-    arr_ran = np.random.randint(0, 100, size=size)
+for size in range(1, cantidad):
+    arr_ran = np.random.randint(0, 100 if size > 100 else size, size=size)
     start = datetime.now()
-    selection_sort(arr_ran)
+    number = random.choice(arr_ran)
+    binary_search(arr_ran, number)
     time = datetime.now() - start
     t.append(time.microseconds)
     bar_progres += 1
